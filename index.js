@@ -84,6 +84,9 @@ bot.on('message', async (msg) => {
     console.error("OpenAI API Error:", error.message);
     bot.sendMessage(chatId, "Oops! My brain froze for a second. Please try again in a moment.");
   }
+  // Gracefully stop polling when Railway restarts or shuts down the container
+process.once('SIGINT', () => bot.stopPolling());
+process.once('SIGTERM', () => bot.stopPolling());
 });
 
 console.log("🚀 Buddy11_bot is live and running on Railway!");
